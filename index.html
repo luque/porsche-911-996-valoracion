@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Porsche 911 (996) — Evolución de Mercado 1998–2026</title>
+  <meta name="description" content="Evolución histórica del valor de mercado europeo de toda la familia Porsche 911 (996.1 y 996.2) desde 1998 hasta 2026, comparativa por modelos y tasador interactivo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a0b0e;
+      --surface: #111319;
+      --surface-2: #171a22;
+      --surface-3: #1e222d;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --text: #f3f4f6;
+      --text-muted: #9aa0ae;
+      --text-dim: #6c7280;
+      --accent: #d4a853;
+      --accent-soft: rgba(212, 168, 83, 0.14);
+      --green: #34d399;
+      --green-soft: rgba(52, 211, 153, 0.14);
+      --red: #f87171;
+      --red-soft: rgba(248, 113, 113, 0.14);
+      --blue: #60a5fa;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: radial-gradient(circle at 50% -10%, #191d28 0%, var(--bg) 45%);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 28px 20px 72px;
+    }
+
+    /* Top bar */
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-badge {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(212, 168, 83, 0.35);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 999px;
+    }
+
+    .brand-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .edition-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 999px;
+    }
+
+    .edition-pill strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .dot-live {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    /* Title */
+    .hero-head {
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(2.1rem, 4.2vw, 3.3rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.08;
+      margin-bottom: 10px;
+    }
+
+    h1 span {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 780px;
+    }
+
+    /* Model selector tabs */
+    .model-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 22px 0 20px;
+    }
+
+    .model-tab {
+      background: var(--surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .model-tab:hover {
+      border-color: var(--border-strong);
+      color: var(--text);
+      background: var(--surface-2);
+    }
+
+    .model-tab.active {
+      background: var(--accent);
+      color: #0b0c10;
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .model-tab .tab-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      opacity: 0.72;
+    }
+
+    /* Studio Hero Card */
+    .studio-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 22px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .studio-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 520px;
+      background: #0c0e13;
+      overflow: hidden;
+    }
+
+    .studio-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 54%;
+      display: block;
+      transition: opacity 0.28s ease, transform 0.5s ease;
+    }
+
+    .studio-stage img.fading {
+      opacity: 0.25;
+      transform: scale(1.015);
+    }
+
+    .studio-overlay-top {
+      position: absolute;
+      top: 16px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .studio-badge {
+      background: rgba(10, 11, 14, 0.74);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 7px 12px;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--text);
+      pointer-events: auto;
+    }
+
+    .studio-badge span {
+      color: var(--accent);
+    }
+
+    .download-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      pointer-events: auto;
+    }
+
+    .btn-download-card {
+      background: rgba(17, 19, 25, 0.84);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 13px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-download-card:hover {
+      background: var(--accent);
+      color: #0a0b0e;
+      border-color: var(--accent);
+    }
+
+    .download-status {
+      font-size: 11px;
+      color: var(--green);
+      background: rgba(10, 11, 14, 0.85);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      padding: 4px 10px;
+      border-radius: 8px;
+      max-width: 310px;
+      text-align: right;
+      display: none;
+    }
+
+    .download-status.show {
+      display: block;
+    }
+
+    .studio-overlay-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 36px 22px 18px;
+      background: linear-gradient(to top, rgba(10, 11, 14, 0.92) 0%, rgba(10, 11, 14, 0.45) 55%, transparent 100%);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .studio-model-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      line-height: 1.05;
+      color: #fff;
+    }
+
+    .studio-model-specs {
+      font-size: 13px;
+      color: #c8cdd8;
+      margin-top: 4px;
+    }
+
+    .studio-color-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--accent);
+      background: rgba(212, 168, 83, 0.14);
+      border: 1px solid rgba(212, 168, 83, 0.35);
+      padding: 5px 10px;
+      border-radius: 999px;
+    }
+
+    /* Thumbnails strip (8 models) */
+    .thumbs-strip {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 10px;
+      padding: 14px 16px;
+      background: var(--surface-2);
+      border-top: 1px solid var(--border);
+    }
+
+    .thumb-btn {
+      background: #0d0f14;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .thumb-btn:hover {
+      border-color: rgba(255, 255, 255, 0.28);
+      transform: translateY(-2px);
+    }
+
+    .thumb-btn.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.22);
+    }
+
+    .thumb-btn img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb-label {
+      padding: 6px 7px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: #0f1117;
+    }
+
+    .thumb-btn.active .thumb-label {
+      color: var(--accent);
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.15;
+    }
+
+    .kpi-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+
+    .kpi-card.highlight-low .kpi-value { color: var(--red); }
+    .kpi-card.highlight-now .kpi-value { color: var(--accent); }
+    .kpi-card.highlight-gain .kpi-value { color: var(--green); }
+
+    /* Sections */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .panel-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.7rem;
+      font-weight: 400;
+      line-height: 1.15;
+    }
+
+    .panel-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Controls */
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ctrl-btn {
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 8px 13px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .ctrl-btn:hover {
+      color: var(--text);
+      border-color: var(--border-strong);
+    }
+
+    .ctrl-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: rgba(212, 168, 83, 0.45);
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 410px;
+      width: 100%;
+    }
+
+    .year-context {
+      margin-top: 16px;
+      padding: 14px 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 13.5px;
+    }
+
+    .year-context-title {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .year-context-text {
+      color: #d1d5db;
+    }
+
+    /* Comparison Table */
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      min-width: 740px;
+    }
+
+    th {
+      text-align: left;
+      padding: 11px 12px;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-strong);
+      font-weight: 600;
+    }
+
+    td {
+      padding: 13px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    tbody tr {
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    tbody tr.active-row {
+      background: rgba(212, 168, 83, 0.09);
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    .badge-engine {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .badge-m96 {
+      background: rgba(96, 165, 250, 0.14);
+      color: #93c5fd;
+      border: 1px solid rgba(96, 165, 250, 0.25);
+    }
+
+    .badge-mezger {
+      background: rgba(212, 168, 83, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(212, 168, 83, 0.3);
+    }
+
+    .gain-pill {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      background: var(--green-soft);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* Estimator */
+    .estimator-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .field select,
+    .field input[type="range"] {
+      width: 100%;
+    }
+
+    .field select {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 13.5px;
+      outline: none;
+    }
+
+    .field select:focus {
+      border-color: var(--accent);
+    }
+
+    input[type="range"] {
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .est-result {
+      background: linear-gradient(145deg, #161922 0%, #101218 100%);
+      border: 1px solid rgba(212, 168, 83, 0.3);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .est-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .est-range {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.5rem, 2.5vw, 2.05rem);
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .est-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .est-meta strong { color: var(--green); }
+
+    .est-notes {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .btn-bbcode {
+      width: 100%;
+      background: var(--accent);
+      color: #0a0b0e;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .btn-bbcode:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .copy-feedback {
+      text-align: center;
+      font-size: 12px;
+      color: var(--green);
+      margin-top: 8px;
+      min-height: 18px;
+      font-weight: 600;
+    }
+
+    /* Buyer notes */
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .note-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .note-card h3 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .note-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    footer {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12.5px;
+      color: var(--text-dim);
+    }
+
+    footer strong { color: var(--text-muted); }
+
+    @media (max-width: 960px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .thumbs-strip { grid-template-columns: repeat(4, 1fr); }
+      .estimator-grid { grid-template-columns: 1fr; }
+      .notes-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .thumbs-strip { grid-template-columns: repeat(2, 1fr); }
+      .form-grid { grid-template-columns: 1fr; }
+      .chart-wrap { height: 320px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-badge">Porsche 911 · Generación 996</span>
+        <span class="brand-sub">Observatorio Histórico de Mercado Europeo (1998–2026)</span>
+      </div>
+      <div class="edition-pill">
+        <span class="dot-live"></span>
+        <span>Datos actualizados · <strong>Noviembre 2026</strong></span>
+      </div>
+    </header>
+
+    <section class="hero-head">
+      <h1>Evolución del precio de la familia <span>911 (996)</span></h1>
+      <p class="hero-subtitle">
+        Trayectoria de cotización en Europa desde su precio de tarifa original hasta noviembre de 2026, diferenciando las fases 996.1 y 996.2, su mínimo histórico y el ritmo de revalorización de cada variante.
+      </p>
+    </section>
+
+    <nav class="model-tabs" id="model-tabs" aria-label="Selector de modelo 996"></nav>
+
+    <section class="studio-card">
+      <div class="studio-stage">
+        <img id="studio-main-photo" src="img/c4s.jpg" alt="Porsche 911 (996) Carrera 4S Coupé" />
+        <div class="studio-overlay-top">
+          <div class="studio-badge" id="studio-badge">
+            <span>996.2</span> · Bloque M96/03 · 3.6L 320 CV
+          </div>
+          <div class="download-wrap">
+            <button class="btn-download-card" id="btn-download-png" type="button">
+              ⬇ Descargar Ficha Técnica PNG
+            </button>
+            <div class="download-status" id="download-status"></div>
+          </div>
+        </div>
+        <div class="studio-overlay-bottom">
+          <div>
+            <h2 class="studio-model-title" id="studio-title">911 Carrera 4S Coupé (996.2)</h2>
+            <p class="studio-model-specs" id="studio-specs">Carrocería ancha Turbo-look · Tracción total · Suspensión y frenos Turbo</p>
+          </div>
+          <span class="studio-color-tag" id="studio-color">Plata Ártico Metalizado</span>
+        </div>
+      </div>
+      <div class="thumbs-strip" id="thumbs-strip"></div>
+    </section>
+
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Precio nuevo (catálogo)</div>
+        <div class="kpi-value" id="kpi-new">—</div>
+        <div class="kpi-sub" id="kpi-new-sub">—</div>
+      </div>
+      <div class="kpi-card highlight-low">
+        <div class="kpi-label">Mínimo histórico</div>
+        <div class="kpi-value" id="kpi-low">—</div>
+        <div class="kpi-sub" id="kpi-low-sub">—</div>
+      </div>
+      <div class="kpi-card highlight-now">
+        <div class="kpi-label">Mediana actual (Nov 2026)</div>
+        <div class="kpi-value" id="kpi-now">—</div>
+        <div class="kpi-sub" id="kpi-now-sub">—</div>
+      </div>
+      <div class="kpi-card highlight-gain">
+        <div class="kpi-label">Revalorización desde suelo</div>
+        <div class="kpi-value" id="kpi-gain">—</div>
+        <div class="kpi-sub" id="kpi-gain-sub">—</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title" id="chart-heading">Curva histórica de valoración</h2>
+          <p class="panel-desc" id="chart-subheading">Mediana europea en buen estado con banda de horquilla (unidades básicas vs. colección).</p>
+        </div>
+        <div class="controls-row" id="chart-controls">
+          <button class="ctrl-btn active" data-mode="single" type="button">Vista General</button>
+          <button class="ctrl-btn" data-mode="gearbox" type="button">Manual vs. Tiptronic</button>
+          <button class="ctrl-btn" data-mode="compare-eur" type="button">Comparativa Gama (€)</button>
+          <button class="ctrl-btn" data-mode="compare-idx" type="button">Comparativa Base 100</button>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="priceChart"></canvas>
+      </div>
+      <div class="year-context" id="year-context">
+        <div>
+          <span class="year-context-title" id="ctx-year">2016</span>
+          <span class="year-context-text" id="ctx-text">Pasa el cursor sobre cualquier año de la gráfica para consultar el contexto histórico del mercado.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Radiografía comparativa de la gama 996</h2>
+          <p class="panel-desc">Haz clic en cualquier fila para cargar su fotografía de estudio y curva de precios.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Modelo</th>
+              <th>Fase</th>
+              <th>Años</th>
+              <th>Bloque Motor</th>
+              <th>Producción aprox.</th>
+              <th>Mínimo histórico</th>
+              <th>Mediana 2026</th>
+              <th>Desde suelo</th>
+            </tr>
+          </thead>
+          <tbody id="comparison-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Tasador rápido 2026 (Multimodelo 996)</h2>
+          <p class="panel-desc">Ajusta los parámetros de tu unidad para estimar su horquilla actual en Europa/España y copiar un resumen estructurado en BBCode.</p>
+        </div>
+      </div>
+      <div class="estimator-grid">
+        <div class="form-grid">
+          <div class="field">
+            <label for="est-model">Modelo 996</label>
+            <select id="est-model"></select>
+          </div>
+          <div class="field">
+            <label for="est-year">Año de fabricación</label>
+            <select id="est-year"></select>
+          </div>
+          <div class="field">
+            <label for="est-gearbox">Transmisión</label>
+            <select id="est-gearbox">
+              <option value="manual">Manual 6 velocidades</option>
+              <option value="tiptronic">Tiptronic S (Automático)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="est-mech" id="est-mech-label">Estado mecánico / IMS</label>
+            <select id="est-mech"></select>
+          </div>
+          <div class="field full">
+            <label for="est-km">
+              <span>Kilometraje actual</span>
+              <span class="mono" id="est-km-val" style="color: var(--accent);">110.000 km</span>
+            </label>
+            <input type="range" id="est-km" min="20000" max="220000" step="5000" value="110000" />
+          </div>
+        </div>
+
+        <div class="est-result">
+          <div class="est-tag">Estimación de mercado · Nov 2026</div>
+          <div class="est-range" id="est-range-out">51.500 € – 58.500 €</div>
+          <div class="est-meta" id="est-meta-out">
+            Valor medio estimado: 55.000 € · <strong>+66,7 %</strong> frente al suelo histórico
+          </div>
+          <p class="est-notes" id="est-notes-out">
+            Las unidades manuales con IMS documentado, libro sellado y boroscopia limpia encabezan la liquidez actual en el mercado español y alemán.
+          </p>
+          <button class="btn-bbcode" id="btn-copy-bbcode" type="button">
+            Copiar resumen para foro (BBCode)
+          </button>
+          <div class="copy-feedback" id="copy-feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Claves de mercado: 996.1 frente a 996.2 y motores Mezger</h2>
+          <p class="panel-desc">Factores técnicos que explican la dispersión de precios en España y Centroeuropa.</p>
+        </div>
+      </div>
+      <div class="notes-grid">
+        <div class="note-card">
+          <h3>996.1 (3.4L) vs. 996.2 (3.6L)</h3>
+          <p>El 996.1 destaca por su menor peso (1.320 kg), el acelerador por cable en las unidades 98–99 y el rodamiento IMS de doble hilera en sus primeros años. El 996.2 aporta el motor 3.6L VarioCam Plus (320 CV), un 25 % más de rigidez estructural, guantera y los faros rediseñados tipo Turbo.</p>
+        </div>
+        <div class="note-card">
+          <h3>Motores M96: IMS, RMS y Boroscopia</h3>
+          <p>En Carrera 996.1, Carrera 996.2, Carrera 4S y 40 Jahre, contar con el rodamiento IMS sustituido (o doble hilera verificado) y una prueba de boroscopia de cilindros sin rayado (bore scoring) marca diferencias de 6.000 € a 10.000 € en la venta real.</p>
+        </div>
+        <div class="note-card">
+          <h3>Bloques Mezger y Cambio Manual</h3>
+          <p>Turbo, GT3 996.1, GT3 996.2 y GT3 RS equipan el cárter seco derivado de competición, exento del fallo IMS. Aquí manda la lectura limpia de la centralita DME y la pintura original. En los modelos con Tiptronic disponible, el cambio Manual 6v cotiza un 16–24 % por encima.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        <strong>Observatorio Porsche 911 (996)</strong> · Datos orientativos basados en transacciones europeas, subastas y portales especializados (1998–2026).
+      </div>
+      <div>
+        Guía histórica interactiva · Generación 996.1 &amp; 996.2
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const YEARS = [
+      1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
+      2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017,
+      2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026
+    ];
+
+    const MODELS = {
+      carrera1: {
+        id: 'carrera1',
+        short: '996.1 Carrera',
+        name: '911 Carrera / Carrera 4 (996.1)',
+        gen: '996.1',
+        yearsLabel: '1998–2001',
+        prodYears: [1998, 1999, 2000, 2001],
+        engineFamily: 'M96',
+        engineDesc: 'Bloque M96/01-02 · 3.4L 300 CV',
+        specs: 'El primer 911 refrigerado por agua · Faros "fried egg" · Acelerador por cable (98–99) · 1.320 kg',
+        production: '~58.000 uds.',
+        colorName: 'Azul Lapis Metalizado',
+        photo: 'img/carrera-996-1.jpg',
+        accentColor: '#60a5fa',
+        newPrice: 76500,
+        newYear: 1998,
+        manualOnly: false,
+        tiptronicDiscount: 0.16,
+        lowYear: 2015,
+        lowPrice: 20500,
+        median: [
+          76500, 68000, 60500, 53000, 46500, 41500, 37000, 33500, 31000, 29000,
+          26200, 23800, 22600, 21800, 21200, 20900, 20600, 20500, 21200, 22400,
+          23800, 25200, 26800, 29800, 32200, 33800, 35000, 36200, 37500
+        ],
+        lowBand: [
+          72000, 63000, 55500, 48000, 41500, 36500, 32500, 29000, 26500, 24500,
+          21800, 19500, 18500, 17800, 17200, 16800, 16500, 16200, 16800, 17600,
+          18800, 20000, 21200, 23500, 25200, 26500, 27400, 28200, 29000
+        ],
+        highBand: [
+          82000, 74000, 66500, 59000, 52500, 47500, 43000, 39500, 37000, 34500,
+          31800, 29500, 28000, 27200, 26800, 26500, 26800, 27400, 28800, 30800,
+          32800, 34800, 37200, 41200, 44500, 46800, 48200, 49600, 51000
+        ]
+      },
+      carrera2: {
+        id: 'carrera2',
+        short: '996.2 Carrera',
+        name: '911 Carrera / Carrera 4 (996.2)',
+        gen: '996.2',
+        yearsLabel: '2002–2004',
+        prodYears: [2002, 2003, 2004],
+        engineFamily: 'M96',
+        engineDesc: 'Bloque M96/03 · 3.6L VarioCam Plus 320 CV',
+        specs: 'Restyling con faros claros estilo Turbo · +25 % rigidez estructural · Guantera · Escape ovalado',
+        production: '~60.000 uds.',
+        colorName: 'Plata Polar Metalizado',
+        photo: 'img/carrera-996-2.jpg',
+        accentColor: '#38bdf8',
+        newPrice: 82500,
+        newYear: 2002,
+        manualOnly: false,
+        tiptronicDiscount: 0.17,
+        lowYear: 2016,
+        lowPrice: 24500,
+        median: [
+          null, null, null, null, 82500, 72500, 64500, 57500, 51500, 46500,
+          40500, 35500, 32000, 29800, 28000, 26800, 25800, 25000, 24500, 25600,
+          27200, 29000, 31200, 35000, 38200, 40400, 41900, 43200, 44500
+        ],
+        lowBand: [
+          null, null, null, null, 78000, 67500, 59500, 52500, 46500, 41500,
+          35500, 30500, 27200, 25000, 23200, 22000, 21000, 20200, 19800, 20800,
+          22000, 23500, 25200, 28200, 30800, 32200, 33400, 34200, 35000
+        ],
+        highBand: [
+          null, null, null, null, 88000, 78000, 70000, 63000, 57000, 52000,
+          46000, 41000, 37500, 35200, 33500, 32400, 31600, 31000, 31200, 32800,
+          35000, 37500, 40500, 45500, 49500, 52500, 54800, 56800, 58500
+        ]
+      },
+      c4s: {
+        id: 'c4s',
+        short: 'Carrera 4S',
+        name: '911 Carrera 4S Coupé (996.2)',
+        gen: '996.2',
+        yearsLabel: '2002–2005',
+        prodYears: [2002, 2003, 2004, 2005],
+        engineFamily: 'M96',
+        engineDesc: 'Bloque M96/03 · 3.6L 320 CV',
+        specs: 'Carrocería ancha Turbo-look (+60 mm) · Banda reflectante trasera · Frenos y tren de rodaje Turbo',
+        production: '17.298 Coupé',
+        colorName: 'Plata Ártico Metalizado',
+        photo: 'img/c4s.jpg',
+        accentColor: '#d4a853',
+        newPrice: 90200,
+        newYear: 2002,
+        manualOnly: false,
+        tiptronicDiscount: 0.19,
+        lowYear: 2016,
+        lowPrice: 33000,
+        median: [
+          null, null, null, null, 90200, 79000, 71000, 64000, 58000, 53500,
+          47000, 42500, 39500, 37500, 36000, 34800, 33900, 33400, 33000, 33800,
+          35500, 37800, 40500, 45200, 48900, 51200, 52800, 53900, 54900
+        ],
+        lowBand: [
+          null, null, null, null, 86000, 74000, 66000, 59000, 53000, 48000,
+          41500, 37000, 34000, 32000, 30500, 29000, 28200, 27500, 27000, 27800,
+          29200, 31000, 33000, 36800, 39500, 41000, 42200, 43000, 43800
+        ],
+        highBand: [
+          null, null, null, null, 96000, 85000, 77000, 70000, 64000, 59500,
+          53500, 49000, 46000, 44000, 42500, 41500, 41000, 40800, 41500, 43200,
+          46000, 49200, 53000, 59000, 64000, 67500, 70000, 72500, 74500
+        ]
+      },
+      '40jahre': {
+        id: '40jahre',
+        short: '40 Jahre 911',
+        name: '911 "40 Jahre 911" (Edición Numerada)',
+        gen: '996.2',
+        yearsLabel: '2004',
+        prodYears: [2004],
+        engineFamily: 'M96',
+        engineDesc: 'Bloque M96/03S X51 · 3.6L 345 CV',
+        specs: 'Serie limitada a 1.963 uds. · Kit X51 + Autoblocante mecánico + M030 · Exclusivo Plata GT',
+        production: '1.963 uds.',
+        colorName: 'Plata GT Metalizado',
+        photo: 'img/40jahre.jpg',
+        accentColor: '#94a3b8',
+        newPrice: 103500,
+        newYear: 2004,
+        manualOnly: true,
+        tiptronicDiscount: 0,
+        lowYear: 2015,
+        lowPrice: 41500,
+        median: [
+          null, null, null, null, null, null, 103500, 89000, 78000, 70000,
+          61000, 55000, 50500, 47500, 45000, 43200, 42000, 41500, 43000, 46500,
+          50500, 54500, 59500, 67000, 73500, 78000, 82500, 86000, 89500
+        ],
+        lowBand: [
+          null, null, null, null, null, null, 98000, 83000, 72000, 64000,
+          55000, 49000, 44500, 41500, 39000, 37500, 36500, 36000, 37200, 40000,
+          43500, 46500, 50500, 56000, 61000, 64500, 68000, 71000, 73500
+        ],
+        highBand: [
+          null, null, null, null, null, null, 109000, 96000, 85000, 77000,
+          68000, 62000, 57500, 54500, 52000, 50500, 50000, 50500, 53000, 58000,
+          63500, 69000, 76000, 86000, 95000, 102000, 108000, 113000, 118000
+        ]
+      },
+      turbo: {
+        id: 'turbo',
+        short: '911 Turbo',
+        name: '911 Turbo / Turbo S (996)',
+        gen: '996',
+        yearsLabel: '2000–2005',
+        prodYears: [2000, 2001, 2002, 2003, 2004, 2005],
+        engineFamily: 'Mezger',
+        engineDesc: 'Bloque Mezger M96/70 · 3.6L Biturbo 420–450 CV',
+        specs: 'Motor cárter seco derivado de Le Mans · Tracción total · Tomas laterales y alerón hidráulico biplano',
+        production: '~20.500 Coupé/Cab',
+        colorName: 'Negro Basalto Metalizado',
+        photo: 'img/turbo.jpg',
+        accentColor: '#a78bfa',
+        newPrice: 132000,
+        newYear: 2000,
+        manualOnly: false,
+        tiptronicDiscount: 0.24,
+        lowYear: 2014,
+        lowPrice: 43000,
+        median: [
+          null, null, 132000, 118000, 105000, 93000, 83000, 75000, 68000, 62500,
+          55000, 49500, 46800, 45200, 44000, 43400, 43000, 45500, 49500, 53500,
+          57500, 61000, 65500, 74000, 81500, 85500, 88500, 91500, 94500
+        ],
+        lowBand: [
+          null, null, 125000, 111000, 98000, 86000, 76000, 68000, 61000, 55500,
+          48000, 42500, 40000, 38500, 37200, 36500, 36000, 37800, 40500, 43500,
+          46500, 49000, 52500, 58500, 64000, 66500, 68500, 70500, 72500
+        ],
+        highBand: [
+          null, null, 140000, 126000, 113000, 101000, 91000, 83000, 76000, 70500,
+          63000, 58000, 55500, 54000, 53000, 53000, 54000, 58000, 64000, 70000,
+          76000, 82000, 89000, 102000, 114000, 121000, 126000, 132000, 138000
+        ]
+      },
+      gt3mk1: {
+        id: 'gt3mk1',
+        short: 'GT3 996.1',
+        name: '911 GT3 Mk1 (996.1)',
+        gen: '996.1',
+        yearsLabel: '1999–2001',
+        prodYears: [1999, 2000, 2001],
+        engineFamily: 'Mezger',
+        engineDesc: 'Bloque Mezger M96/76 · 3.6L Atmosférico 360 CV',
+        specs: 'El primer 911 GT3 de la historia · Ensamblado a mano en Weissach · Alerón fijo "Taco" · Sin ESP',
+        production: '1.868 uds.',
+        colorName: 'Rojo Guardia',
+        photo: 'img/gt3mk1.jpg',
+        accentColor: '#f87171',
+        newPrice: 102000,
+        newYear: 1999,
+        manualOnly: true,
+        tiptronicDiscount: 0,
+        lowYear: 2013,
+        lowPrice: 54000,
+        median: [
+          null, 102000, 96000, 90000, 83000, 76000, 70500, 66500, 63500, 61000,
+          57500, 55800, 55000, 54500, 54200, 54000, 58000, 67000, 76000, 84000,
+          89000, 93000, 99000, 112000, 124000, 131000, 137000, 143000, 149000
+        ],
+        lowBand: [
+          null, 97000, 91000, 84000, 77000, 70000, 64500, 60500, 57500, 55000,
+          51500, 49500, 48500, 48000, 47500, 47000, 50000, 57000, 64000, 70000,
+          74000, 77000, 82000, 92000, 101000, 106000, 111000, 115000, 120000
+        ],
+        highBand: [
+          null, 108000, 102000, 96000, 89000, 82500, 77000, 73000, 70500, 68000,
+          65000, 63500, 63000, 63000, 63500, 65000, 71000, 83000, 95000, 106000,
+          113000, 119000, 128000, 146000, 162000, 172000, 180000, 188000, 196000
+        ]
+      },
+      gt3mk2: {
+        id: 'gt3mk2',
+        short: 'GT3 996.2',
+        name: '911 GT3 Mk2 (996.2)',
+        gen: '996.2',
+        yearsLabel: '2003–2005',
+        prodYears: [2003, 2004, 2005],
+        engineFamily: 'Mezger',
+        engineDesc: 'Bloque Mezger M96/79 · 3.6L Atmosférico 381 CV',
+        specs: 'Corte a 8.200 rpm · Frenos 6 pistones · Alerón Clubsport biplano · Disponible con paquete Clubsport M003',
+        production: '2.313 uds.',
+        colorName: 'Amarillo Speed',
+        photo: 'img/gt3mk2.jpg',
+        accentColor: '#facc15',
+        newPrice: 112500,
+        newYear: 2003,
+        manualOnly: true,
+        tiptronicDiscount: 0,
+        lowYear: 2013,
+        lowPrice: 62000,
+        median: [
+          null, null, null, null, null, 112500, 103000, 94000, 86000, 80000,
+          72000, 67500, 65000, 63500, 62500, 62000, 66500, 75000, 84000, 91000,
+          96000, 100000, 106000, 119000, 130000, 136000, 142000, 147000, 153000
+        ],
+        lowBand: [
+          null, null, null, null, null, 107000, 97000, 88000, 80000, 74000,
+          66000, 61000, 58500, 57000, 56000, 55500, 59000, 65500, 72500, 78000,
+          82000, 85000, 90000, 100000, 109000, 114000, 118000, 122000, 127000
+        ],
+        highBand: [
+          null, null, null, null, null, 119000, 110000, 101000, 93000, 87000,
+          79000, 75000, 73000, 72000, 72000, 73000, 79500, 91000, 103000, 112000,
+          119000, 125000, 134000, 152000, 168000, 176000, 184000, 192000, 200000
+        ]
+      },
+      gt3rs: {
+        id: 'gt3rs',
+        short: 'GT3 RS',
+        name: '911 GT3 RS (996.2)',
+        gen: '996.2',
+        yearsLabel: '2003–2004',
+        prodYears: [2003, 2004],
+        engineFamily: 'Mezger',
+        engineDesc: 'Bloque Mezger M96/79 · 3.6L 381 CV (Homologación)',
+        specs: 'Solo 682 unidades · Capó y alerón en carbono · Luneta policarbonato · Blanco Carrara con decoración roja o azul',
+        production: '682 uds.',
+        colorName: 'Blanco Carrara / Rojo',
+        photo: 'img/gt3rs.jpg',
+        accentColor: '#34d399',
+        newPrice: 134000,
+        newYear: 2003,
+        manualOnly: true,
+        tiptronicDiscount: 0,
+        lowYear: 2011,
+        lowPrice: 98000,
+        median: [
+          null, null, null, null, null, 134000, 128000, 122000, 118000, 114000,
+          106000, 101000, 99000, 98000, 102000, 112000, 132000, 168000, 195000, 208000,
+          212000, 215000, 224000, 255000, 282000, 295000, 308000, 320000, 335000
+        ],
+        lowBand: [
+          null, null, null, null, null, 128000, 121000, 115000, 110000, 106000,
+          98000, 92000, 90000, 88000, 92000, 100000, 116000, 145000, 168000, 178000,
+          182000, 185000, 192000, 218000, 240000, 250000, 260000, 270000, 282000
+        ],
+        highBand: [
+          null, null, null, null, null, 142000, 136000, 131000, 127000, 123000,
+          116000, 112000, 110000, 111000, 116000, 128000, 152000, 195000, 228000, 245000,
+          252000, 258000, 270000, 310000, 345000, 365000, 382000, 398000, 418000
+        ]
+      }
+    };
+
+    const YEAR_NOTES = {
+      1998: 'Lanzamiento del 996.1 (3.4L 300 CV): el primer 911 refrigerado por agua revoluciona la ergonomía y prestaciones.',
+      1999: 'Estreno del primer 911 GT3 de la historia en Ginebra; nace la leyenda Mezger atmosférica.',
+      2000: 'Llega el 996 Turbo (420 CV), referencia absoluta de superdeportivo utilizable a diario.',
+      2002: 'Restyling 996.2 (3.6L 320 CV VarioCam Plus, nuevos faros y chasis reforzado) junto al lanzamiento del Carrera 4S.',
+      2003: 'Aparecen los GT3 Mk2 (381 CV) y el exclusivo GT3 RS de homologación (solo 682 unidades).',
+      2004: 'Edición conmemorativa "40 Jahre 911" (1.963 uds.) con kit X51 y autoblocante mecánico.',
+      2008: 'Inicio de la crisis financiera global: fuerte aceleración de la depreciación en toda la gama 996.',
+      2011: 'El GT3 RS toca su suelo histórico (~98.000 €) antes de iniciar una escalada imparable.',
+      2013: 'Los GT3 996.1 y 996.2 tocan fondo en torno a 54.000–62.000 €; empiezan a ser detectados por coleccionistas.',
+      2014: 'El 996 Turbo alcanza su mínimo histórico (~43.000 €) antes de que el mercado redescubra el valor del bloque Mezger.',
+      2015: 'Suelo histórico en 996.1 Carrera (~20.500 €) y 40 Jahre (~41.500 €). El miedo al IMS deprime las cotizaciones M96.',
+      2016: 'Mínimo histórico en 996.2 Carrera (~24.500 €) y Carrera 4S Coupé (~33.000 €): hoy recordado como la mejor ventana de compra.',
+      2019: 'Consolidación del estatus youngtimer; los 996 bien mantenidos comienzan a separarse claramente de las unidades descuidadas.',
+      2021: 'Fuerte rebote post-pandemia en toda Europa por la subida de los air-cooled (964/993) y el 997.',
+      2023: 'El 996.2 C4S supera la barrera de los 50.000 € y los Turbo manuales superan con holgura los 90.000 €.',
+      2025: 'Madurez del mercado clásico moderno: máxima prima para unidades manuales con libro, boroscopia o DME impecable.',
+      2026: 'Noviembre 2026: tendencia alcista estable y selectiva; el 996 se consagra como el último 911 compacto y analógico accesible.'
+    };
+
+    let activeModelId = 'c4s';
+    let chartMode = 'single';
+    let chartInstance = null;
+
+    const fmtEur = (n) => new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 }).format(Math.round(n)) + ' €';
+    const fmtPct = (n) => '+' + n.toFixed(1).replace('.', ',') + ' %';
+
+    function getLatestPrice(model) {
+      return model.median[model.median.length - 1];
+    }
+
+    function getGainPct(model) {
+      const now = getLatestPrice(model);
+      return ((now - model.lowPrice) / model.lowPrice) * 100;
+    }
+
+    function renderTabsAndThumbs() {
+      const tabsEl = document.getElementById('model-tabs');
+      const thumbsEl = document.getElementById('thumbs-strip');
+      tabsEl.innerHTML = '';
+      thumbsEl.innerHTML = '';
+
+      Object.values(MODELS).forEach((m) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'model-tab' + (m.id === activeModelId ? ' active' : '');
+        btn.innerHTML = `${m.short} <span class="tab-year">${m.yearsLabel}</span>`;
+        btn.addEventListener('click', () => selectModel(m.id));
+        tabsEl.appendChild(btn);
+
+        const tbtn = document.createElement('button');
+        tbtn.type = 'button';
+        tbtn.className = 'thumb-btn' + (m.id === activeModelId ? ' active' : '');
+        tbtn.innerHTML = `
+          <img src="${m.photo}" alt="${m.name}" loading="lazy" />
+          <div class="thumb-label">${m.short}</div>
+        `;
+        tbtn.addEventListener('click', () => selectModel(m.id));
+        thumbsEl.appendChild(tbtn);
+      });
+    }
+
+    function updateHeroAndKPIs() {
+      const m = MODELS[activeModelId];
+      const mainImg = document.getElementById('studio-main-photo');
+      mainImg.classList.add('fading');
+      setTimeout(() => {
+        mainImg.src = m.photo;
+        mainImg.alt = m.name;
+        mainImg.onload = () => mainImg.classList.remove('fading');
+        setTimeout(() => mainImg.classList.remove('fading'), 180);
+      }, 90);
+
+      document.getElementById('studio-badge').innerHTML = `<span>${m.gen}</span> · ${m.engineDesc}`;
+      document.getElementById('studio-title').textContent = m.name;
+      document.getElementById('studio-specs').textContent = m.specs;
+      document.getElementById('studio-color').textContent = m.colorName;
+
+      const now = getLatestPrice(m);
+      const gain = getGainPct(m);
+      const dropFromNew = (((m.lowPrice - m.newPrice) / m.newPrice) * 100).toFixed(0);
+
+      document.getElementById('kpi-new').textContent = fmtEur(m.newPrice);
+      document.getElementById('kpi-new-sub').textContent = `Tarifa España/EU (${m.newYear})`;
+
+      document.getElementById('kpi-low').textContent = fmtEur(m.lowPrice);
+      document.getElementById('kpi-low-sub').textContent = `Suelo en ${m.lowYear} (${dropFromNew} % vs. nuevo)`;
+
+      document.getElementById('kpi-now').textContent = fmtEur(now);
+      document.getElementById('kpi-now-sub').textContent = `Rango ${fmtEur(m.lowBand[m.lowBand.length - 1])} – ${fmtEur(m.highBand[m.highBand.length - 1])}`;
+
+      document.getElementById('kpi-gain').textContent = fmtPct(gain);
+      document.getElementById('kpi-gain-sub').textContent = `+${fmtEur(now - m.lowPrice)} desde ${m.lowYear}`;
+    }
+
+    function renderComparisonTable() {
+      const tbody = document.getElementById('comparison-tbody');
+      tbody.innerHTML = '';
+      Object.values(MODELS).forEach((m) => {
+        const now = getLatestPrice(m);
+        const gain = getGainPct(m);
+        const tr = document.createElement('tr');
+        if (m.id === activeModelId) tr.className = 'active-row';
+        tr.innerHTML = `
+          <td><strong>${m.name}</strong></td>
+          <td class="mono" style="color:var(--accent);">${m.gen}</td>
+          <td class="mono">${m.yearsLabel}</td>
+          <td><span class="badge-engine ${m.engineFamily === 'Mezger' ? 'badge-mezger' : 'badge-m96'}">${m.engineFamily}</span></td>
+          <td class="mono">${m.production}</td>
+          <td class="mono">${fmtEur(m.lowPrice)} <span style="color:var(--text-dim);font-size:11px;">(${m.lowYear})</span></td>
+          <td class="mono" style="color:var(--accent);font-weight:600;">${fmtEur(now)}</td>
+          <td><span class="gain-pill">${fmtPct(gain)}</span></td>
+        `;
+        tr.addEventListener('click', () => {
+          selectModel(m.id);
+          window.scrollTo({ top: 140, behavior: 'smooth' });
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updateYearContext(year) {
+      const m = MODELS[activeModelId];
+      const idx = YEARS.indexOf(year);
+      document.getElementById('ctx-year').textContent = `${year}`;
+      let baseNote = YEAR_NOTES[year] || 'Evolución progresiva de la demanda europea de deportivos Porsche analógicos.';
+      if (idx !== -1 && m.median[idx] != null && chartMode !== 'compare-eur' && chartMode !== 'compare-idx') {
+        baseNote = `${m.short}: mediana ~${fmtEur(m.median[idx])}. ${baseNote}`;
+      }
+      document.getElementById('ctx-text').textContent = baseNote;
+    }
+
+    function renderChart() {
+      const ctx = document.getElementById('priceChart').getContext('2d');
+      if (chartInstance) chartInstance.destroy();
+
+      const m = MODELS[activeModelId];
+      let datasets = [];
+      let yCallback = (v) => (v >= 1000 ? (v / 1000) + 'k €' : v + ' €');
+
+      const heading = document.getElementById('chart-heading');
+      const subheading = document.getElementById('chart-subheading');
+
+      if (chartMode === 'single') {
+        heading.textContent = `Evolución histórica — ${m.name}`;
+        subheading.textContent = `Suelo en ${m.lowYear} (${fmtEur(m.lowPrice)}) y revalorización de ${fmtPct(getGainPct(m))} hasta noviembre de 2026.`;
+
+        datasets = [
+          {
+            label: 'Unidades de colección',
+            data: m.highBand,
+            borderColor: 'rgba(212, 168, 83, 0.28)',
+            backgroundColor: 'rgba(212, 168, 83, 0.08)',
+            borderDash: [4, 4],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            fill: '+1',
+            tension: 0.3
+          },
+          {
+            label: 'Unidades básicas / alto km',
+            data: m.lowBand,
+            borderColor: 'rgba(154, 160, 174, 0.28)',
+            backgroundColor: 'transparent',
+            borderDash: [4, 4],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            fill: false,
+            tension: 0.3
+          },
+          {
+            label: 'Mediana de mercado (EU)',
+            data: m.median,
+            borderColor: m.accentColor,
+            backgroundColor: m.accentColor,
+            borderWidth: 3,
+            pointRadius: (c) => (YEARS[c.dataIndex] === m.lowYear || YEARS[c.dataIndex] === 2026 ? 6 : 2.5),
+            pointBackgroundColor: (c) => (YEARS[c.dataIndex] === m.lowYear ? '#f87171' : YEARS[c.dataIndex] === 2026 ? '#34d399' : m.accentColor),
+            pointBorderColor: '#0a0b0e',
+            pointBorderWidth: 2,
+            tension: 0.3
+          }
+        ];
+      } else if (chartMode === 'gearbox') {
+        heading.textContent = `Manual 6v vs. Tiptronic S — ${m.name}`;
+        if (m.manualOnly) {
+          subheading.textContent = `El ${m.short} se fabricó exclusivamente con caja de cambios Manual de 6 velocidades.`;
+          datasets = [
+            {
+              label: 'Manual 6 velocidades (Exclusivo)',
+              data: m.median,
+              borderColor: m.accentColor,
+              backgroundColor: m.accentColor,
+              borderWidth: 3,
+              pointRadius: 3,
+              tension: 0.3
+            }
+          ];
+        } else {
+          subheading.textContent = `Diferencial creciente a favor del cambio Manual 6v (descuento actual Tiptronic aprox. -${Math.round(m.tiptronicDiscount * 100)} %).`;
+          const manualSeries = m.median.map((v) => (v == null ? null : Math.round(v * 1.07)));
+          const tipSeries = m.median.map((v, i) => {
+            if (v == null) return null;
+            const spread = i < 14 ? 0.94 : (1 - m.tiptronicDiscount);
+            return Math.round(v * spread);
+          });
+          datasets = [
+            {
+              label: 'Manual 6 velocidades',
+              data: manualSeries,
+              borderColor: '#d4a853',
+              backgroundColor: '#d4a853',
+              borderWidth: 3,
+              pointRadius: 3,
+              tension: 0.3
+            },
+            {
+              label: 'Tiptronic S (Automático)',
+              data: tipSeries,
+              borderColor: '#60a5fa',
+              backgroundColor: '#60a5fa',
+              borderWidth: 2.5,
+              borderDash: [5, 4],
+              pointRadius: 2.5,
+              tension: 0.3
+            }
+          ];
+        }
+      } else if (chartMode === 'compare-eur') {
+        heading.textContent = 'Comparativa Gama 996 (Mediana en Euros)';
+        subheading.textContent = 'Evolución conjunta de los 8 modelos diferenciando 996.1 y 996.2 desde 1998 hasta noviembre de 2026.';
+        datasets = Object.values(MODELS).map((item) => ({
+          label: item.short,
+          data: item.median,
+          borderColor: item.accentColor,
+          backgroundColor: item.accentColor,
+          borderWidth: item.id === activeModelId ? 3.5 : 1.8,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          tension: 0.3
+        }));
+      } else if (chartMode === 'compare-idx') {
+        heading.textContent = 'Ritmo de revalorización desde mínimos (Base 100)';
+        subheading.textContent = 'Cada modelo se indexa a 100 en su año de mínimo histórico para comparar quién se revaloriza más rápido.';
+        yCallback = (v) => v + ' pts';
+        datasets = Object.values(MODELS).map((item) => {
+          const lowIdx = YEARS.indexOf(item.lowYear);
+          const indexed = item.median.map((v, i) => {
+            if (v == null || i < lowIdx) return null;
+            return Number(((v / item.lowPrice) * 100).toFixed(1));
+          });
+          return {
+            label: item.short,
+            data: indexed,
+            borderColor: item.accentColor,
+            backgroundColor: item.accentColor,
+            borderWidth: item.id === activeModelId ? 3.5 : 1.8,
+            pointRadius: 0,
+            pointHoverRadius: 5,
+            tension: 0.3
+          };
+        });
+      }
+
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: { labels: YEARS, datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          onHover: (evt, elements) => {
+            if (elements && elements.length > 0) {
+              const year = YEARS[elements[0].index];
+              updateYearContext(year);
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: '#cbd5e1',
+                usePointStyle: true,
+                boxWidth: 8,
+                font: { family: "'Plus Jakarta Sans', sans-serif", size: 12 }
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(15, 18, 25, 0.96)',
+              titleColor: '#d4a853',
+              bodyColor: '#f3f4f6',
+              borderColor: 'rgba(212, 168, 83, 0.35)',
+              borderWidth: 1,
+              padding: 12,
+              callbacks: {
+                label: (c) => {
+                  if (c.parsed.y == null) return null;
+                  if (chartMode === 'compare-idx') {
+                    const diff = (c.parsed.y - 100).toFixed(1);
+                    return ` ${c.dataset.label}: ${c.parsed.y} pts (+${diff} %)`;
+                  }
+                  return ` ${c.dataset.label}: ${fmtEur(c.parsed.y)}`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255,255,255,0.04)' },
+              ticks: { color: '#9aa0ae', font: { family: "'JetBrains Mono', monospace", size: 11 } }
+            },
+            y: {
+              grid: { color: 'rgba(255,255,255,0.06)' },
+              ticks: {
+                color: '#9aa0ae',
+                font: { family: "'JetBrains Mono', monospace", size: 11 },
+                callback: yCallback
+              }
+            }
+          }
+        }
+      });
+
+      updateYearContext(m.lowYear);
+    }
+
+    // Estimator logic
+    function populateEstimatorSelects() {
+      const modelSel = document.getElementById('est-model');
+      if (modelSel.options.length === 0) {
+        Object.values(MODELS).forEach((m) => {
+          const opt = document.createElement('option');
+          opt.value = m.id;
+          opt.textContent = m.name;
+          modelSel.appendChild(opt);
+        });
+      }
+      modelSel.value = activeModelId;
+      syncEstimatorModelFields();
+    }
+
+    function syncEstimatorModelFields() {
+      const m = MODELS[document.getElementById('est-model').value];
+
+      const yearSel = document.getElementById('est-year');
+      yearSel.innerHTML = '';
+      m.prodYears.forEach((y) => {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        yearSel.appendChild(opt);
+      });
+      yearSel.value = m.prodYears[Math.floor(m.prodYears.length / 2)];
+
+      const gbSel = document.getElementById('est-gearbox');
+      if (m.manualOnly) {
+        gbSel.value = 'manual';
+        gbSel.options[1].disabled = true;
+        gbSel.options[1].textContent = 'Tiptronic S (No fabricado en este modelo)';
+      } else {
+        gbSel.options[1].disabled = false;
+        gbSel.options[1].textContent = 'Tiptronic S (Automático)';
+      }
+
+      const mechLabel = document.getElementById('est-mech-label');
+      const mechSel = document.getElementById('est-mech');
+      mechSel.innerHTML = '';
+      if (m.engineFamily === 'M96') {
+        mechLabel.textContent = 'Estado mecánico / IMS (Bloque M96)';
+        const opts = [
+          { v: 'top', t: 'IMS reforzado + Boroscopia OK + Libro oficial' },
+          { v: 'good', t: 'IMS sustituido + Mantenimiento al día' },
+          { v: 'orig', t: 'IMS original / Sin constancia documentada' },
+          { v: 'work', t: 'Necesita puesta a punto / sin historial' }
+        ];
+        opts.forEach((o) => {
+          const el = document.createElement('option');
+          el.value = o.v;
+          el.textContent = o.t;
+          mechSel.appendChild(el);
+        });
+        mechSel.value = 'good';
+      } else {
+        mechLabel.textContent = 'Estado mecánico / DME (Bloque Mezger)';
+        const opts = [
+          { v: 'top', t: 'DME limpio (0 rangos altos) + Pintura orig. + Libro' },
+          { v: 'good', t: 'Mantenimiento especialista al día + Historial claro' },
+          { v: 'orig', t: 'Uso frecuente en circuito / Historial parcial' },
+          { v: 'work', t: 'Necesita revisión mayor / repintados' }
+        ];
+        opts.forEach((o) => {
+          const el = document.createElement('option');
+          el.value = o.v;
+          el.textContent = o.t;
+          mechSel.appendChild(el);
+        });
+        mechSel.value = 'good';
+      }
+
+      calculateEstimate();
+    }
+
+    function calculateEstimate() {
+      const m = MODELS[document.getElementById('est-model').value];
+      const km = parseInt(document.getElementById('est-km').value, 10);
+      const gb = document.getElementById('est-gearbox').value;
+      const mech = document.getElementById('est-mech').value;
+
+      document.getElementById('est-km-val').textContent = new Intl.NumberFormat('es-ES').format(km) + ' km';
+
+      let val = getLatestPrice(m);
+
+      if (!m.manualOnly) {
+        if (gb === 'manual') val *= 1.07;
+        else val *= (1 - m.tiptronicDiscount);
+      }
+
+      const kmDiff = (110000 - km) / 10000;
+      const kmFactor = Math.max(-0.22, Math.min(0.28, kmDiff * 0.024));
+      val *= (1 + kmFactor);
+
+      const mechMap = { top: 1.11, good: 1.0, orig: 0.91, work: 0.79 };
+      val *= (mechMap[mech] || 1.0);
+
+      const lowEst = Math.round((val * 0.94) / 500) * 500;
+      const highEst = Math.round((val * 1.06) / 500) * 500;
+      const midEst = Math.round(val / 500) * 500;
+      const gainVsFloor = ((midEst - m.lowPrice) / m.lowPrice) * 100;
+
+      document.getElementById('est-range-out').textContent = `${fmtEur(lowEst)} – ${fmtEur(highEst)}`;
+      document.getElementById('est-meta-out').innerHTML =
+        `Valor medio estimado: <strong>${fmtEur(midEst)}</strong> · <strong>${gainVsFloor >= 0 ? '+' : ''}${gainVsFloor.toFixed(1).replace('.', ',')} %</strong> frente al suelo de ${m.lowYear}`;
+
+      document.getElementById('est-notes-out').textContent =
+        m.engineFamily === 'M96'
+          ? 'En motores M96, presentar facturas de IMS, embrague/RMS y prueba de boroscopia limpia acelera notablemente la venta en el tramo alto de la horquilla.'
+          : 'En bloques Mezger (cárter seco), el informe de pasadas de vueltas (DME), la trazabilidad de propietarios y los códigos de fábrica son determinantes.';
+    }
+
+    function copyBBCode() {
+      const m = MODELS[document.getElementById('est-model').value];
+      const year = document.getElementById('est-year').value;
+      const km = new Intl.NumberFormat('es-ES').format(parseInt(document.getElementById('est-km').value, 10));
+      const gbText = document.getElementById('est-gearbox').selectedOptions[0].textContent;
+      const mechText = document.getElementById('est-mech').selectedOptions[0].textContent;
+      const rangeText = document.getElementById('est-range-out').textContent;
+      const gainText = fmtPct(getGainPct(m));
+
+      const bb = `[b]Tasación orientativa Porsche 911 (996) — Noviembre 2026[/b]
+• [b]Modelo:[/b] ${m.name} (${year})
+• [b]Transmisión:[/b] ${gbText}
+• [b]Kilometraje:[/b] ${km} km
+• [b]Estado mecánico:[/b] ${mechText}
+• [b]Horquilla estimada:[/b] [color=#b8860b][b]${rangeText}[/b][/color]
+• [b]Referencia histórica:[/b] Suelo en ${m.lowYear} (${fmtEur(m.lowPrice)}) · Revalorización media del modelo: [b]${gainText}[/b]
+[i]Generado con el Observatorio Histórico Porsche 911 (996)[/i]`;
+
+      const feedback = document.getElementById('copy-feedback');
+      navigator.clipboard.writeText(bb).then(() => {
+        feedback.textContent = '✓ Resumen BBCode copiado al portapapeles.';
+        setTimeout(() => { feedback.textContent = ''; }, 3500);
+      }).catch(() => {
+        feedback.textContent = 'No se pudo acceder al portapapeles automáticamente.';
+      });
+    }
+
+    function drawRoundedRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    function drawImageCover(ctx, img, x, y, w, h) {
+      const iw = img.naturalWidth || img.width;
+      const ih = img.naturalHeight || img.height;
+      if (!iw || !ih) return;
+      const scale = Math.max(w / iw, h / ih);
+      const sw = w / scale;
+      const sh = h / scale;
+      const sx = (iw - sw) / 2;
+      const sy = (ih - sh) / 2;
+      ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+    }
+
+    function showDownloadStatus(msg) {
+      const el = document.getElementById('download-status');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(el._timer);
+      el._timer = setTimeout(() => el.classList.remove('show'), 5500);
+    }
+
+    function triggerDownloadFromCanvas(canvas, filename) {
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function renderTechCardCanvas(m, includePhoto) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1280;
+      canvas.height = 880;
+      const ctx = canvas.getContext('2d');
+
+      // Base background
+      ctx.fillStyle = '#0a0b0e';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      if (includePhoto) {
+        const img = document.getElementById('studio-main-photo');
+        if (img && img.complete && img.naturalWidth > 0) {
+          drawImageCover(ctx, img, 0, 0, 1280, 640);
+        }
+        const grad = ctx.createLinearGradient(0, 420, 0, 640);
+        grad.addColorStop(0, 'rgba(10,11,14,0)');
+        grad.addColorStop(1, 'rgba(10,11,14,1)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 420, 1280, 220);
+      } else {
+        // Clean local-mode editorial header with embedded price evolution curve
+        const bgGrad = ctx.createLinearGradient(0, 0, 0, 640);
+        bgGrad.addColorStop(0, '#161a24');
+        bgGrad.addColorStop(1, '#0a0b0e');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, 1280, 640);
+
+        // Draw sparkline curve of the model's historical median
+        const pts = m.median
+          .map((v, i) => (v == null ? null : { y: YEARS[i], v }))
+          .filter(Boolean);
+        const minV = Math.min(...pts.map((p) => p.v)) * 0.9;
+        const maxV = Math.max(...pts.map((p) => p.v)) * 1.05;
+        const gx = 64, gy = 110, gw = 1152, gh = 360;
+
+        // Subtle grid
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+        ctx.lineWidth = 1;
+        for (let r = 0; r <= 4; r++) {
+          const ly = gy + (gh / 4) * r;
+          ctx.beginPath();
+          ctx.moveTo(gx, ly);
+          ctx.lineTo(gx + gw, ly);
+          ctx.stroke();
+        }
+
+        // Line
+        ctx.beginPath();
+        pts.forEach((p, idx) => {
+          const px = gx + (idx / Math.max(1, pts.length - 1)) * gw;
+          const py = gy + gh - ((p.v - minV) / (maxV - minV)) * gh;
+          if (idx === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        });
+        ctx.strokeStyle = m.accentColor;
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // Highlight floor & 2026 points
+        pts.forEach((p, idx) => {
+          if (p.y === m.lowYear || p.y === 2026) {
+            const px = gx + (idx / Math.max(1, pts.length - 1)) * gw;
+            const py = gy + gh - ((p.v - minV) / (maxV - minV)) * gh;
+            ctx.beginPath();
+            ctx.arc(px, py, 7, 0, Math.PI * 2);
+            ctx.fillStyle = p.y === m.lowYear ? '#f87171' : '#34d399';
+            ctx.fill();
+            ctx.fillStyle = '#f3f4f6';
+            ctx.font = '600 15px "JetBrains Mono", monospace';
+            ctx.fillText(`${p.y}: ${fmtEur(p.v)}`, Math.min(px - 30, 1080), py - 14);
+          }
+        });
+
+        ctx.fillStyle = '#9aa0ae';
+        ctx.font = '500 15px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText(`Evolución de mediana europea (${m.newYear}–2026) · ${m.engineDesc}`, 64, 72);
+      }
+
+      // Title
+      ctx.fillStyle = '#d4a853';
+      ctx.font = '600 17px "JetBrains Mono", monospace';
+      ctx.fillText(`PORSCHE 911 (${m.gen}) · OBSERVATORIO DE MERCADO 1998–2026`, 48, 560);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '700 40px "Plus Jakarta Sans", sans-serif';
+      ctx.fillText(m.name, 48, 612);
+
+      // 4 KPI boxes
+      const now = getLatestPrice(m);
+      const gain = fmtPct(getGainPct(m));
+      const kpis = [
+        { label: 'PRECIO NUEVO', val: fmtEur(m.newPrice), sub: `Catálogo ${m.newYear}`, color: '#f3f4f6' },
+        { label: 'MÍNIMO HISTÓRICO', val: fmtEur(m.lowPrice), sub: `Año ${m.lowYear}`, color: '#f87171' },
+        { label: 'MEDIANA NOV 2026', val: fmtEur(now), sub: 'Mercado europeo', color: '#d4a853' },
+        { label: 'REVALORIZACIÓN', val: gain, sub: `Desde ${m.lowYear}`, color: '#34d399' }
+      ];
+
+      kpis.forEach((k, i) => {
+        const x = 48 + i * 300;
+        const y = 665;
+        ctx.fillStyle = '#13161e';
+        ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+        ctx.lineWidth = 1;
+        drawRoundedRect(ctx, x, y, 282, 145, 12);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#9aa0ae';
+        ctx.font = '600 14px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText(k.label, x + 20, y + 36);
+
+        ctx.fillStyle = k.color;
+        ctx.font = '700 32px "JetBrains Mono", monospace';
+        ctx.fillText(k.val, x + 20, y + 86);
+
+        ctx.fillStyle = '#6c7280';
+        ctx.font = '400 14px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText(k.sub, x + 20, y + 120);
+      });
+
+      // Footer
+      ctx.fillStyle = '#6c7280';
+      ctx.font = '500 15px "Plus Jakarta Sans", sans-serif';
+      ctx.fillText('Observatorio Porsche 911 (996) · Datos orientativos de mercado europeo (1998–2026)', 48, 850);
+
+      return canvas;
+    }
+
+    function downloadTechCardPNG() {
+      const m = MODELS[activeModelId];
+      const filename = `porsche-996-${m.id}-ficha-2026.png`;
+
+      try {
+        // Attempt full-photo export (works natively on GitHub Pages / http / https)
+        const canvasWithPhoto = renderTechCardCanvas(m, true);
+        triggerDownloadFromCanvas(canvasWithPhoto, filename);
+        showDownloadStatus('✓ Ficha técnica PNG descargada con fotografía.');
+      } catch (err) {
+        // Local file:// protocol taints canvas on cross-file drawImage; export clean chart card instead
+        try {
+          const fallbackCanvas = renderTechCardCanvas(m, false);
+          triggerDownloadFromCanvas(fallbackCanvas, filename);
+          showDownloadStatus('✓ Descargada (modo local file:// con gráfica; en GitHub Pages incluirá la foto).');
+        } catch (err2) {
+          showDownloadStatus('No se pudo exportar la imagen en este navegador.');
+        }
+      }
+    }
+
+    function selectModel(id) {
+      activeModelId = id;
+      renderTabsAndThumbs();
+      updateHeroAndKPIs();
+      renderComparisonTable();
+      renderChart();
+      populateEstimatorSelects();
+    }
+
+    // Init events
+    document.querySelectorAll('#chart-controls .ctrl-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#chart-controls .ctrl-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        chartMode = btn.dataset.mode;
+        renderChart();
+      });
+    });
+
+    document.getElementById('est-model').addEventListener('change', syncEstimatorModelFields);
+    document.getElementById('est-year').addEventListener('change', calculateEstimate);
+    document.getElementById('est-gearbox').addEventListener('change', calculateEstimate);
+    document.getElementById('est-mech').addEventListener('change', calculateEstimate);
+    document.getElementById('est-km').addEventListener('input', calculateEstimate);
+    document.getElementById('btn-copy-bbcode').addEventListener('click', copyBBCode);
+    document.getElementById('btn-download-png').addEventListener('click', downloadTechCardPNG);
+
+    // Boot
+    selectModel('c4s');
+  </script>
+</body>
+</html>
