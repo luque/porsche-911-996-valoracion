@@ -769,6 +769,47 @@
       .notes-grid { grid-template-columns: 1fr; }
     }
 
+    @media (max-width: 768px) {
+      .studio-stage {
+        display: flex;
+        flex-direction: column;
+        aspect-ratio: auto;
+        max-height: none;
+      }
+      .studio-stage img {
+        order: 1;
+        aspect-ratio: 16 / 9;
+        height: auto;
+      }
+      .studio-overlay-bottom {
+        order: 2;
+        position: static;
+        background: var(--surface);
+        padding: 16px 16px 12px;
+        border-top: 1px solid var(--border);
+      }
+      .studio-overlay-top {
+        order: 3;
+        position: static;
+        padding: 0 16px 16px;
+        background: var(--surface);
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .download-wrap {
+        align-items: flex-start;
+        width: 100%;
+      }
+      .btn-download-card {
+        width: 100%;
+        justify-content: center;
+      }
+      .download-status {
+        text-align: left;
+        max-width: 100%;
+      }
+    }
+
     @media (max-width: 600px) {
       .thumbs-strip { grid-template-columns: repeat(2, 1fr); }
       .form-grid { grid-template-columns: 1fr; }
